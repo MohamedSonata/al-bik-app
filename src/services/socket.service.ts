@@ -9,6 +9,9 @@ const SOCKET_URL = import.meta.env.VITE_SOCKET_URL as string | undefined;
 const PUBLIC_SEAT_ID = 'RESTINTRJ';
 const TIMEOUT_MS = 10_000;
 
+// Debug: Log the socket URL on initialization
+console.log('[SocketService] VITE_SOCKET_URL:', SOCKET_URL);
+
 class SocketService {
   private socket: Socket | null = null;
 
