@@ -1,0 +1,49 @@
+{
+  "nav": { "home": "Home", "menu": "Menu", "about": "About", "contact": "Contact" },
+  "hero": {
+    "eyebrow": "Jordan's Newest Grill — Est. 2026",
+    "title": "Al-Baik",
+    "subtitle": "Exceptional Taste. Born in Jordan, 2026.",
+    "subtitleAr": "طعم استثنائي. وُلد في الأردن ٢٠٢٦",
+    "orderNow": "Order Now",
+    "viewMenu": "View Menu"
+  },
+  "marquee": {
+    "offer1": "Tonight Only — Charcoal Smoked Chicken for 4.5 JD",
+    "offer2": "Family Meal Deals — Up to 4 People",
+    "offer3": "Charcoal Rotisserie Chicken — Smoked to Perfection",
+    "offer4": "Fresh Ingredients. Every Order. Every Time."
+  },
+  "gallery": { "title": "From Our Kitchen", "loadMore": "Load More" },
+  "stats": {
+    "branches": "Branches",
+    "customers": "Happy Customers",
+    "rating": "Customer Rating",
+    "fresh": "Fresh Daily"
+  },
+  "about": {
+    "title": "Our Story",
+    "bodyEn": "Born in 2026, Al-Baik brings the art of charcoal-smoked and broasted chicken to Al-Mazar Al-Janoobi. We believe great food starts with the finest ingredients, the hottest coals, and a passion for feeding people well — every single order.",
+    "bodyAr": "وُلد البيك عام 2026 ليجلب فن الدجاج المشوي على الفحم والمقلي إلى المزار الجنوبي. نؤمن بأن الطعام الرائع يبدأ بأجود المكونات وأسخن الجمر وشغف حقيقي بإطعام الناس على أكمل وجه — في كل طلب."
+  },
+  "contact": {
+    "title": "Find Us",
+    "address": "Al-Mazar Al-Janoobi – Tarbiya Street, opposite Bradayz Bakeries",
+    "addressAr": "المزار الجنوبي - شارع التربيه، مقابل مخابز برادايز",
+    "phone": "0793540333",
+    "hours": "Opening Hours",
+    "sunday": "Sunday – Thursday",
+    "fridaySaturday": "Friday – Saturday",
+    "sundayTime": "10:00 AM – 1:00 AM",
+    "fridaySaturdayTime": "10:00 AM – 2:00 AM"
+  },
+  "footer": {
+    "taglineEn": "Exceptional Taste. Est. 2026.",
+    "taglineAr": "طعم استثنائي. تأسس ٢٠٢٦",
+    "quickLinks": "Quick Links",
+    "followUs": "Follow Us",
+    "contactInfo": "Contact",
+    "copyright": "© 2026 Al-Baik. All Rights Reserved."
+  },
+  "menu": { "title": "Our Menu", "subtitle": "Fresh. Crispy. Exceptional.", "addToOrder": "Add", "ingredients": "Ingredients", "orderOnWhatsApp": "Order on WhatsApp", "sar": "JD" }
+}

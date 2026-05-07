@@ -1,0 +1,155 @@
+export interface Product {
+  id: string;
+  nameAr: string;
+  nameEn: string;
+  descriptionAr: string;
+  descriptionEn: string;
+  price: number;
+  category: string;
+  imageUrl: string;
+  ingredients: string[];
+  featured?: boolean;
+  stock?: number;
+  discountPercentage?: number;
+  discountedPrice?: number;
+}
+
+export const products: Product[] = [
+  {
+    id: "p1",
+    nameAr: "دجاجة الشوايه مدخنة على الفحم",
+    nameEn: "Charcoal Smoked Rotisserie Chicken",
+    descriptionAr: "دجاجة كاملة مشوية على الفحم، مدخنة بالطريقة التقليدية حتى تصبح ذهبية مقرمشة من الخارج وطرية من الداخل",
+    descriptionEn: "Whole chicken roasted on charcoal, smoked the traditional way until golden crispy outside and tender inside",
+    price: 5.5,
+    discountPercentage: 18,
+    discountedPrice: 4.5,
+    category: "grills",
+    imageUrl: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=600&q=80",
+    ingredients: ["Whole Chicken", "Charcoal", "Special Spice Blend", "Garlic", "Lemon", "Olive Oil"],
+    featured: true,
+  },
+  {
+    id: "p2",
+    nameAr: "دجاج مقلي مقرمش",
+    nameEn: "Crispy Broasted Chicken",
+    descriptionAr: "دجاج مقلي مقرمش بالخلطة السرية، مقدم مع صلصة الثوم",
+    descriptionEn: "Crispy fried chicken with the secret spice blend, served with garlic sauce",
+    price: 5.5,
+    category: "grills",
+    imageUrl: "https://images.unsplash.com/photo-1598103442097-8b74394b95c7?auto=format&fit=crop&w=600&q=80",
+    ingredients: ["Chicken", "Special Spices", "Garlic", "Flour", "Buttermilk"],
+  },
+  {
+    id: "p3",
+    nameAr: "وجبة عائلية للأربعة",
+    nameEn: "Family Meal for Four",
+    descriptionAr: "وجبة عائلية تكفي أربعة أشخاص: دجاجتان مشويتان + أرز + سلطة + مشروبات",
+    descriptionEn: "Family meal for four: two rotisserie chickens + rice + salad + drinks",
+    price: 16.5,
+    category: "family",
+    imageUrl: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=600&q=80",
+    ingredients: ["2 Whole Chickens", "Rice", "Salad", "Bread", "Drinks"],
+    featured: true,
+  },
+  {
+    id: "p4",
+    nameAr: "وجبة الزوجين",
+    nameEn: "Couple's Meal",
+    descriptionAr: "وجبة مثالية للاثنين: دجاجة مشوية + أرز + سلطة + مشروبان",
+    descriptionEn: "Perfect meal for two: one rotisserie chicken + rice + salad + 2 drinks",
+    price: 9.5,
+    category: "family",
+    imageUrl: "https://images.unsplash.com/photo-1559117865-a99cac1c95d8?auto=format&fit=crop&w=600&q=80",
+    ingredients: ["Whole Chicken", "Rice", "Salad", "2 Drinks"],
+  },
+  {
+    id: "p5",
+    nameAr: "بطاطس مقلية",
+    nameEn: "French Fries",
+    descriptionAr: "بطاطس ذهبية مقرمشة مع صلصة الثوم أو الكاتشب",
+    descriptionEn: "Golden crispy french fries with garlic sauce or ketchup",
+    price: 1.5,
+    category: "appetizers",
+    imageUrl: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80",
+    ingredients: ["Potatoes", "Salt", "Vegetable Oil"],
+  },
+  {
+    id: "p6",
+    nameAr: "حمص بالطحينة",
+    nameEn: "Hummus with Tahini",
+    descriptionAr: "حمص بالطحينة وزيت الزيتون البكر مع الخبز العربي",
+    descriptionEn: "Hummus with tahini and extra virgin olive oil, served with pita",
+    price: 2.0,
+    category: "appetizers",
+    imageUrl: "https://images.unsplash.com/photo-1577303935007-0d306ee638cf?auto=format&fit=crop&w=600&q=80",
+    ingredients: ["Chickpeas", "Tahini", "Olive Oil", "Garlic", "Lemon"],
+  },
+  {
+    id: "p7",
+    nameAr: "سلطة خضراء طازجة",
+    nameEn: "Fresh Green Salad",
+    descriptionAr: "خضار موسمية طازجة مع تتبيلة الليمون والزيتون",
+    descriptionEn: "Fresh seasonal greens with lemon and olive dressing",
+    price: 2.0,
+    category: "appetizers",
+    imageUrl: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80",
+    ingredients: ["Lettuce", "Tomatoes", "Cucumber", "Olive Oil", "Lemon"],
+  },
+  {
+    id: "p8",
+    nameAr: "عصير ليمون نعناع",
+    nameEn: "Mint Lemonade",
+    descriptionAr: "ليمون طازج معصور مع النعناع الطازج والسكر",
+    descriptionEn: "Freshly squeezed lemon with fresh mint and sugar",
+    price: 1.5,
+    category: "drinks",
+    imageUrl: "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?auto=format&fit=crop&w=600&q=80",
+    ingredients: ["Lemon", "Fresh Mint", "Sugar", "Water", "Ice"],
+  },
+  {
+    id: "p9",
+    nameAr: "عصير برتقال طازج",
+    nameEn: "Fresh Orange Juice",
+    descriptionAr: "برتقال طازج معصور أمامك مباشرة",
+    descriptionEn: "Freshly squeezed orange juice, pressed right in front of you",
+    price: 1.5,
+    category: "drinks",
+    imageUrl: "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=600&q=80",
+    ingredients: ["Fresh Oranges"],
+  },
+  {
+    id: "p10",
+    nameAr: "كنافة بالجبن",
+    nameEn: "Cheese Kunafa",
+    descriptionAr: "كنافة ذهبية محشوة بالجبن العكاوي مع القطر والفستق",
+    descriptionEn: "Golden kunafa filled with Akkawi cheese, served with syrup and pistachios",
+    price: 3.0,
+    category: "desserts",
+    imageUrl: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80",
+    ingredients: ["Shredded Dough", "Akkawi Cheese", "Sugar Syrup", "Pistachios", "Rose Water"],
+    featured: true,
+  },
+  {
+    id: "p11",
+    nameAr: "أم علي",
+    nameEn: "Umm Ali",
+    descriptionAr: "حلوى مصرية تقليدية بالمكسرات والكريمة والقشطة",
+    descriptionEn: "Traditional Egyptian dessert with nuts, cream and milk",
+    price: 2.5,
+    category: "desserts",
+    imageUrl: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80",
+    ingredients: ["Pastry", "Milk", "Cream", "Nuts", "Sugar"],
+  },
+  {
+    id: "p12",
+    nameAr: "ساندويتش دجاج مشوي",
+    nameEn: "Grilled Chicken Sandwich",
+    descriptionAr: "دجاج مشوي على الفحم في خبز أرابا طازج مع المخللات والصلصة",
+    descriptionEn: "Charcoal grilled chicken in fresh bread with pickles and sauce",
+    price: 2.5,
+    category: "grills",
+    imageUrl: "https://images.unsplash.com/photo-1528736235302-52922df5c122?auto=format&fit=crop&w=600&q=80",
+    ingredients: ["Chicken", "Fresh Bread", "Pickles", "Garlic Sauce", "Tomatoes"],
+  },
+];

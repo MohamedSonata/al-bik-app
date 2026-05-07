@@ -1,0 +1,49 @@
+{
+  "nav": { "home": "الرئيسية", "menu": "القائمة", "about": "من نحن", "contact": "تواصل معنا" },
+  "hero": {
+    "eyebrow": "أحدث مطعم في الأردن — تأسس ٢٠٢٦",
+    "title": "البيك",
+    "subtitle": "Exceptional Taste. Born in Jordan, 2026.",
+    "subtitleAr": "طعم استثنائي. وُلد في الأردن ٢٠٢٦",
+    "orderNow": "اطلب الآن",
+    "viewMenu": "عرض القائمة"
+  },
+  "marquee": {
+    "offer1": "عرض فقط لنهاية الليلة — دجاجة الشوايه بـ 4.5 دينار",
+    "offer2": "وجبات عائلية تكفي حتى 4 أشخاص",
+    "offer3": "دجاجة الشوايه مدخنة على الفحم — طعم لا يُنسى",
+    "offer4": "مكونات طازجة في كل طلب، في كل مرة"
+  },
+  "gallery": { "title": "من مطبخنا", "loadMore": "عرض المزيد" },
+  "stats": {
+    "branches": "فرع",
+    "customers": "عميل سعيد",
+    "rating": "تقييم العملاء",
+    "fresh": "طازج يومياً"
+  },
+  "about": {
+    "title": "قصتنا",
+    "bodyEn": "Born in 2026, Al-Baik brings the art of charcoal-smoked and broasted chicken to Al-Mazar Al-Janoobi. We believe great food starts with the finest ingredients, the hottest coals, and a passion for feeding people well — every single order.",
+    "bodyAr": "وُلد البيك عام 2026 ليجلب فن الدجاج المشوي على الفحم والمقلي إلى المزار الجنوبي. نؤمن بأن الطعام الرائع يبدأ بأجود المكونات وأسخن الجمر وشغف حقيقي بإطعام الناس على أكمل وجه — في كل طلب."
+  },
+  "contact": {
+    "title": "تجدنا هنا",
+    "address": "Al-Mazar Al-Janoobi – Tarbiya Street, opposite Bradayz Bakeries",
+    "addressAr": "المزار الجنوبي - شارع التربيه، مقابل مخابز برادايز",
+    "phone": "0793540333",
+    "hours": "ساعات العمل",
+    "sunday": "الأحد – الخميس",
+    "fridaySaturday": "الجمعة – السبت",
+    "sundayTime": "10:00 صباحاً – 1:00 صباحاً",
+    "fridaySaturdayTime": "10:00 صباحاً – 2:00 صباحاً"
+  },
+  "footer": {
+    "taglineEn": "Exceptional Taste. Est. 2026.",
+    "taglineAr": "طعم استثنائي. تأسس ٢٠٢٦",
+    "quickLinks": "روابط سريعة",
+    "followUs": "تابعنا",
+    "contactInfo": "تواصل معنا",
+    "copyright": "© ٢٠٢٦ البيك. جميع الحقوق محفوظة."
+  },
+  "menu": { "title": "قائمتنا", "subtitle": "طازج. مقرمش. استثنائي.", "addToOrder": "إضافة", "ingredients": "المكونات", "orderOnWhatsApp": "الطلب عبر واتساب", "sar": "د.أ" }
+}
