@@ -15,8 +15,7 @@ build
 .env
 .env.local
 .env.*.local
-.env.production
-.env.development
+# Note: .env.production is created during Docker build from build args
 
 # Git
 .git

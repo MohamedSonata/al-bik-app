@@ -17,12 +17,14 @@ COPY . .
 
 # Build arguments for environment variables
 ARG VITE_SOCKET_URL
-ENV VITE_SOCKET_URL=${VITE_SOCKET_URL}
 
-# Debug: Print the env var value
-RUN echo "Building with VITE_SOCKET_URL=${VITE_SOCKET_URL}"
+# Create .env.production file from build arg
+RUN echo "VITE_SOCKET_URL=${VITE_SOCKET_URL}" > .env.production
 
-# Build the application
+# Debug: Show what we're building with
+RUN echo "Building with:" && cat .env.production
+
+# Build the application (Vite will read .env.production)
 RUN npm run build
 
 # Stage 2: Serve with Nginx
