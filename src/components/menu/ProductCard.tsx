@@ -1,23 +1,27 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
-import { ChevronRight, ChevronLeft } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ShoppingCart, Check } from 'lucide-react';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { CategoryPill } from '@/components/ui/CategoryPill';
 import { PriceBadge } from '@/components/ui/PriceBadge';
 import { Product } from '@/data/products';
 import { categories } from '@/data/categories';
 import { ProductModal } from './ProductModal';
+import { useCartStore } from '@/stores/cart.store';
+import { useToast } from '@/hooks/use-toast';
 
 interface ProductCardProps {
   product: Product;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isAr = i18n.language === 'ar';
   const [modalOpen, setModalOpen] = useState(false);
   const [imgError, setImgError] = useState(false);
+  const { addItem } = useCartStore();
+  const { toast } = useToast();
 
   const category = categories.find(c => c.slug === product.category);
   const defaultImage = '/images/cat-general.png';
@@ -25,6 +29,49 @@ export function ProductCard({ product }: ProductCardProps) {
   
   const hasDiscount = product.discountPercentage && product.discountPercentage > 0;
   const displayPrice = hasDiscount && product.discountedPrice ? product.discountedPrice : product.price;
+
+  const [isAdding, setIsAdding] = useState(false);
+
+  const handleQuickAdd = async (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent opening the modal
+    
+    if (isAdding) return; // Prevent double clicks
+    
+    setIsAdding(true);
+    
+    try {
+      // Convert Product to MenuProduct format for cart
+      const menuProduct = {
+        id: product.id,
+        name: isAr ? product.nameAr : product.nameEn,
+        price: product.price,
+        discountedPrice: product.discountedPrice,
+        category: product.category,
+        imageUrl: product.imageUrl,
+        available: true
+      };
+      
+      addItem(menuProduct, 1, [], undefined);
+      
+      toast({
+        title: t('cart.itemAdded'),
+        description: `${isAr ? product.nameAr : product.nameEn}`,
+        duration: 2000,
+      });
+      
+      // Brief delay for visual feedback
+      await new Promise(resolve => setTimeout(resolve, 600));
+    } catch (error) {
+      toast({
+        title: t('cart.error'),
+        description: t('cart.addError'),
+        variant: 'destructive',
+        duration: 3000,
+      });
+    } finally {
+      setIsAdding(false);
+    }
+  };
 
   return (
     <>
@@ -79,9 +126,56 @@ export function ProductCard({ product }: ProductCardProps) {
               )}
               <PriceBadge price={displayPrice} className="text-lg md:text-xl px-3 py-1.5" />
             </div>
-            <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-brand-charcoal border border-brand-gold/20 flex items-center justify-center text-brand-gold group-hover:bg-brand-crimson group-hover:text-white group-hover:border-brand-crimson transition-colors duration-300 flex-shrink-0">
-              {isAr ? <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" /> : <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />}
-            </div>
+            
+            {/* Enhanced Add to Cart Button */}
+            <motion.button
+              onClick={handleQuickAdd}
+              disabled={isAdding}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-brand-crimson to-brand-crimson/80 border-2 border-brand-gold/30 flex items-center justify-center text-white shadow-lg hover:shadow-xl hover:shadow-brand-crimson/50 hover:border-brand-gold transition-all duration-300 flex-shrink-0 disabled:opacity-50 disabled:cursor-not-allowed group/btn"
+              aria-label={t('menu.quickAdd')}
+              aria-live="polite"
+              aria-busy={isAdding}
+            >
+              {/* Glow effect on hover */}
+              <div className="absolute inset-0 rounded-full bg-brand-gold/20 opacity-0 group-hover/btn:opacity-100 blur-md transition-opacity duration-300" />
+              
+              {/* Icon with animation */}
+              <AnimatePresence mode="wait">
+                {isAdding ? (
+                  <motion.div
+                    key="check"
+                    initial={{ scale: 0, rotate: -180 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    exit={{ scale: 0, rotate: 180 }}
+                    transition={{ duration: 0.3, type: "spring" }}
+                  >
+                    <Check className="w-5 h-5 md:w-6 md:h-6" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="cart"
+                    initial={{ scale: 0, rotate: -180 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    exit={{ scale: 0, rotate: 180 }}
+                    transition={{ duration: 0.3, type: "spring" }}
+                  >
+                    <ShoppingCart className="w-5 h-5 md:w-6 md:h-6" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              
+              {/* Ripple effect on click */}
+              {isAdding && (
+                <motion.div
+                  className="absolute inset-0 rounded-full border-2 border-white"
+                  initial={{ scale: 1, opacity: 1 }}
+                  animate={{ scale: 1.5, opacity: 0 }}
+                  transition={{ duration: 0.6 }}
+                />
+              )}
+            </motion.button>
           </div>
         </div>
       </motion.div>

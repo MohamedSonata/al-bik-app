@@ -45,7 +45,7 @@
     "contactInfo": "Contact",
     "copyright": "© 2026 Al-Baik. All Rights Reserved."
   },
-  "menu": { "title": "Our Menu", "subtitle": "Fresh. Crispy. Exceptional.", "addToOrder": "Add", "ingredients": "Ingredients", "orderOnWhatsApp": "Order on WhatsApp", "sar": "JD" },
+  "menu": { "title": "Our Menu", "subtitle": "Fresh. Crispy. Exceptional.", "addToOrder": "Add", "ingredients": "Ingredients", "orderOnWhatsApp": "Order on WhatsApp", "sar": "JD", "quickAdd": "Quick Add" },
   "cart": {
     "title": "Your Cart",
     "items": "Items",

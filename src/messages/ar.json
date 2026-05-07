@@ -45,7 +45,7 @@
     "contactInfo": "تواصل معنا",
     "copyright": "© ٢٠٢٦ البيك. جميع الحقوق محفوظة."
   },
-  "menu": { "title": "قائمتنا", "subtitle": "طازج. مقرمش. استثنائي.", "addToOrder": "إضافة", "ingredients": "المكونات", "orderOnWhatsApp": "الطلب عبر واتساب", "sar": "د.أ" },
+  "menu": { "title": "قائمتنا", "subtitle": "طازج. مقرمش. استثنائي.", "addToOrder": "إضافة", "ingredients": "المكونات", "orderOnWhatsApp": "الطلب عبر واتساب", "sar": "د.أ", "quickAdd": "إضافة سريعة" },
   "cart": {
     "title": "سلة التسوق",
     "items": "عناصر",
