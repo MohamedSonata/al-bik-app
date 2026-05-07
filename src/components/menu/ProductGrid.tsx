@@ -1,26 +1,23 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useMenuData } from '@/context/MenuDataContext';
 import { ProductCard } from './ProductCard';
-import { Loader2 } from 'lucide-react';
+import { ProductGridSkeleton } from '@/components/ui/shimmer';
+import { ErrorState } from './ErrorState';
 import { useTranslation } from 'react-i18next';
 
 export function ProductGrid() {
-  const { products, productsLoading } = useMenuData();
+  const { products, productsLoading, initialLoading, status, error, retry } = useMenuData();
   const { i18n } = useTranslation();
   const isAr = i18n.language === 'ar';
 
-  if (productsLoading) {
-    return (
-      <div className="flex flex-col items-center justify-center py-32 gap-4">
-        <Loader2
-          className="w-10 h-10 animate-spin"
-          style={{ color: 'hsl(43,100%,52%)' }}
-        />
-        <p className="font-body text-sm uppercase tracking-widest" style={{ color: 'hsl(40,20%,45%)' }}>
-          {isAr ? 'جارٍ تحميل المنتجات...' : 'Loading products...'}
-        </p>
-      </div>
-    );
+  /* Show shimmer during initial load or when switching categories */
+  if (initialLoading || productsLoading) {
+    return <ProductGridSkeleton />;
+  }
+
+  /* Show error state if connection failed */
+  if (status === 'error' && error) {
+    return <ErrorState onRetry={retry} message={error} />;
   }
 
   return (

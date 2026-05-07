@@ -9,11 +9,11 @@ import { useMenuData } from '@/context/MenuDataContext';
 import { Wifi, WifiOff, Loader2 } from 'lucide-react';
 
 function ConnectionBadge() {
-  const { status, isLive } = useMenuData();
+  const { status, isLive, initialLoading } = useMenuData();
   const { i18n } = useTranslation();
   const isAr = i18n.language === 'ar';
 
-  if (status === 'idle') return null;
+  if (status === 'idle' || initialLoading) return null;
 
   const configs = {
     connecting: {

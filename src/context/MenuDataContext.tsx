@@ -50,6 +50,10 @@ interface MenuDataContextValue {
   error: string | null;
   /** Whether data is coming from the live socket vs static fallback */
   isLive: boolean;
+  /** Retry connection */
+  retry: () => void;
+  /** Initial loading state */
+  initialLoading: boolean;
 }
 
 const MenuDataContext = createContext<MenuDataContextValue | null>(null);
@@ -61,10 +65,10 @@ export function MenuDataProvider({ children }: { children: React.ReactNode }) {
   const [error, setError] = useState<string | null>(null);
   const [liveCategories, setLiveCategories] = useState<Category[]>([]);
   const [activeCategory, setActiveCategory] = useState(staticCategories[0]?.slug ?? '');
-  const [products, setProducts] = useState<Product[]>(
-    staticProducts.filter((p) => p.category === staticCategories[0]?.slug),
-  );
+  const [products, setProducts] = useState<Product[]>([]);
   const [productsLoading, setProductsLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [retryCount, setRetryCount] = useState(0);
 
   /* Cache: categoryId → Product[] so we don't re-fetch */
   const productCache = useRef(new Map<string, Product[]>());
@@ -115,57 +119,78 @@ export function MenuDataProvider({ children }: { children: React.ReactNode }) {
   /* ── Socket connection lifecycle ───────────────────────── */
   useEffect(() => {
     let cancelled = false;
+    let timeoutId: NodeJS.Timeout;
 
     async function init() {
       setStatus('connecting');
       setError(null);
+      setInitialLoading(true);
+
+      /* 60-second timeout */
+      const timeoutPromise = new Promise<never>((_, reject) => {
+        timeoutId = setTimeout(() => {
+          reject(new Error('Connection timeout after 60 seconds'));
+        }, 60000);
+      });
 
       try {
-        /* Phase 1 — connect socket */
-        socketService.connect();
+        /* Race between connection and timeout */
+        await Promise.race([
+          (async () => {
+            /* Phase 1 — connect socket */
+            socketService.connect();
 
-        /* Phase 2 — authenticate with seat */
-        await socketService.connectToSeat();
-        if (cancelled) return;
-
-        /* Phase 3 — fetch categories */
-        const catResponse = await socketService.requestCategories();
-        if (cancelled) return;
-
-        const mapped = catResponse.categories
-          .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0))
-          .map(mapCategory);
-
-        setLiveCategories(mapped);
-        setStatus('connected');
-        
-        /* Set active category to first real category */
-        if (mapped.length > 0) {
-          setActiveCategory(mapped[0].slug);
-        }
-
-        /* Phase 4 — pre-fetch products for first real category only */
-        if (mapped.length > 0) {
-          const firstId = mapped[0].slug;
-          try {
-            const prodResponse = await socketService.requestProducts(firstId);
+            /* Phase 2 — authenticate with seat */
+            await socketService.connectToSeat();
             if (cancelled) return;
-            const prods = prodResponse.products.map((p) => mapProduct(p, firstId));
-            productCache.current.set(firstId, prods);
-            /* Set initial products to first category */
-            setProducts(prods);
-          } catch {
-            /* Non-fatal — still show categories */
-            setProducts(staticProducts.filter((p) => p.category === firstId));
-          }
-        }
+
+            /* Phase 3 — fetch categories */
+            const catResponse = await socketService.requestCategories();
+            if (cancelled) return;
+
+            const mapped = catResponse.categories
+              .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0))
+              .map(mapCategory);
+
+            setLiveCategories(mapped);
+            setStatus('connected');
+            
+            /* Set active category to first real category */
+            if (mapped.length > 0) {
+              setActiveCategory(mapped[0].slug);
+            }
+
+            /* Phase 4 — pre-fetch products for first real category only */
+            if (mapped.length > 0) {
+              const firstId = mapped[0].slug;
+              try {
+                const prodResponse = await socketService.requestProducts(firstId);
+                if (cancelled) return;
+                const prods = prodResponse.products.map((p) => mapProduct(p, firstId));
+                productCache.current.set(firstId, prods);
+                /* Set initial products to first category */
+                setProducts(prods);
+              } catch {
+                /* Non-fatal — still show categories */
+                setProducts(staticProducts.filter((p) => p.category === firstId));
+              }
+            }
+          })(),
+          timeoutPromise,
+        ]);
+
+        clearTimeout(timeoutId);
       } catch (err: unknown) {
         if (cancelled) return;
         const msg = err instanceof Error ? err.message : 'Socket connection failed';
-        console.warn('[MenuData] Falling back to static data:', msg);
+        console.warn('[MenuData] Error:', msg);
         setError(msg);
-        setStatus('fallback');
-        setProducts(staticProducts);
+        setStatus('error');
+        clearTimeout(timeoutId);
+      } finally {
+        if (!cancelled) {
+          setInitialLoading(false);
+        }
       }
     }
 
@@ -173,9 +198,16 @@ export function MenuDataProvider({ children }: { children: React.ReactNode }) {
 
     return () => {
       cancelled = true;
+      clearTimeout(timeoutId);
       socketService.disconnect();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [retryCount]);
+
+  /* ── Retry handler ─────────────────────────────────────── */
+  const retry = useCallback(() => {
+    setRetryCount((prev) => prev + 1);
+    productCache.current.clear();
   }, []);
 
   return (
@@ -189,6 +221,8 @@ export function MenuDataProvider({ children }: { children: React.ReactNode }) {
         activeCategory,
         error,
         isLive,
+        retry,
+        initialLoading,
       }}
     >
       {children}
