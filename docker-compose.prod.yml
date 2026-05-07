@@ -2,10 +2,11 @@ version: '3.8'
 
 services:
   app:
-    image: ${DOCKER_REGISTRY:-mosonata}/al-baik-app:${IMAGE_TAG:-latest}
+    # env_file: ./.env.production
+    image: mosonata/al-baik-app
     container_name: al-baik-app
     ports:
-      - "${APP_PORT:-5173}:80"
+      - "5173:80"
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
@@ -17,5 +18,4 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
-
 
