@@ -19,6 +19,9 @@ COPY . .
 ARG VITE_SOCKET_URL
 ENV VITE_SOCKET_URL=${VITE_SOCKET_URL}
 
+# Debug: Print the env var value
+RUN echo "Building with VITE_SOCKET_URL=${VITE_SOCKET_URL}"
+
 # Build the application
 RUN npm run build
 
