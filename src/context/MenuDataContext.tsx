@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useRef, useState, useCallback } from 'react';
 import { socketService } from '@/services/socket.service';
+import { orderService } from '@/services/order.service';
 import { products as staticProducts } from '@/data/products';
 import { categories as staticCategories } from '@/data/categories';
 import type { ConnectionStatus, MenuCategory, MenuProduct } from '@/types/seat.types';
@@ -138,11 +139,25 @@ export function MenuDataProvider({ children }: { children: React.ReactNode }) {
         await Promise.race([
           (async () => {
             /* Phase 1 — connect socket */
-            socketService.connect();
+            const socket = socketService.connect();
+            
+            /* Initialize orderService with socket instance */
+            orderService.setSocket(socket);
+            console.log('[MenuData] Socket initialized');
 
             /* Phase 2 — authenticate with seat */
-            await socketService.connectToSeat();
+            console.log('[MenuData] Attempting to connect to seat...');
+            const seatResponse = await socketService.connectToSeat();
+            console.log('[MenuData] Seat response received:', seatResponse);
             if (cancelled) return;
+            
+            /* Set seat ID in orderService */
+            if (seatResponse.success && seatResponse.seat?.publicSeatId) {
+              orderService.setCurrentSeatId(seatResponse.seat.publicSeatId);
+              console.log('[MenuData] Seat ID set:', seatResponse.seat.publicSeatId);
+            } else {
+              console.error('[MenuData] Failed to set seat ID. Response:', seatResponse);
+            }
 
             /* Phase 3 — fetch categories */
             const catResponse = await socketService.requestCategories();

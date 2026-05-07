@@ -5,6 +5,7 @@ import { Footer } from '@/components/layout/Footer';
 import { CategoryFilter } from '@/components/menu/CategoryFilter';
 import { ProductGrid } from '@/components/menu/ProductGrid';
 import { GoldDivider } from '@/components/ui/GoldDivider';
+import { FloatingCartButton } from '@/components/cart/FloatingCartButton';
 import { useMenuData } from '@/context/MenuDataContext';
 import { Wifi, WifiOff, Loader2 } from 'lucide-react';
 
@@ -119,6 +120,9 @@ export default function MenuPage() {
       </main>
 
       <Footer />
+      
+      {/* Floating Cart Button */}
+      <FloatingCartButton />
     </motion.div>
   );
 }

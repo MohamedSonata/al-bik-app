@@ -6,6 +6,8 @@ import { AnimatePresence } from "framer-motion";
 import NotFound from "@/pages/not-found";
 import HomePage from "@/pages/HomePage";
 import MenuPage from "@/pages/MenuPage";
+import CartScreen from "@/components/cart/CartScreen";
+import { CheckoutScreen } from "@/components/checkout/CheckoutScreen";
 import { MenuDataProvider } from "@/context/MenuDataContext";
 
 const queryClient = new QueryClient();
@@ -16,6 +18,8 @@ function Router() {
       <Switch>
         <Route path="/" component={HomePage} />
         <Route path="/menu" component={MenuPage} />
+        <Route path="/cart" component={CartScreen} />
+        <Route path="/checkout" component={CheckoutScreen} />
         <Route component={NotFound} />
       </Switch>
     </AnimatePresence>

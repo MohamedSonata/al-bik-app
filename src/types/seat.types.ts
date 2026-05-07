@@ -1,5 +1,12 @@
 export interface SeatConnectionResponse {
   success: boolean;
+  businessName?: string;
+  businessType?: string;
+  features?: {
+    allowMenuBrowsing: boolean;
+    allowBarcodeScanning: boolean;
+    allowCustomerOrdering: boolean;
+  };
   seat?: {
     publicSeatId: string;
     businessName: string;
